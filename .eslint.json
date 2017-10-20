@@ -1,0 +1,36 @@
+{
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true,
+        "jquery": true
+    },
+    "globals": {},
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "rules": {
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "func-style": [
+            1,
+            "expression"
+        ],
+        "valid-typeof":2,
+        "no-unreachable": 2,
+        "no-dupe-args": 2,
+        "no-dupe-keys": 2,
+        "no-sparse-arrays":2,
+        "no-func-assign": 2,
+        "no-redeclare": 2,
+        "no-self-assign":2,
+		"no-unexpected-multiline": 2,
+		"no-console": 1,
+        "no-debugger": 1,
+        "no-undef": 2,
+        "no-unused-vars": 2
+    }
+}
