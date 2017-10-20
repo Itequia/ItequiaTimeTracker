@@ -1,24 +1,13 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
 	Platform,
 	StyleSheet,
 	Text,
 	View,
-	Image
-} from 'react-native';
-
-const instructions = Platform.select({
-	ios: 'Press Cmd+R to reload,\n' +
-	'Cmd+D or shake for dev menu',
-	android: 'Double tap R on your keyboard to reload,\n' +
-	'Shake or press menu button for dev menu',
-});
+	Image,
+	TextInput,
+	Button
+} from 'react-native'
 
 export default class App extends Component<{}> {
 	render() {
@@ -31,14 +20,18 @@ export default class App extends Component<{}> {
 				<Text style={ styles.subtitle }>
 					[TIME TRACKER]
 				</Text>
-				<Text style={ styles.instructions }>
-					Per començar, edita App.js
-				</Text>
-				<Text style={ styles.instructions }>
-					{ instructions }
-				</Text>
+				<TextInput
+					style={ styles.textInput }
+					placeholder="Username"
+					onChangeText={(text) => this.setState({text})}
+				/>
+				<Button
+					style={ styles.loginButton }
+					onPress={() => { Alert.alert('You tapped the button!')}}
+					title="Log in"
+				/>
 			</View>
-		);
+		)
 	}
 }
 
@@ -57,7 +50,7 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	logo: { 
-		width: 193, 
+		width: 200, 
 		height: 110,
 	},
 	instructions: {
@@ -65,4 +58,11 @@ const styles = StyleSheet.create({
 		color: '#333333',
 		marginBottom: 5,
 	},
-});
+	textInput: {
+		height: 40,
+		width: 200
+	},
+	loginButton: {
+		width: 200
+	}
+})
