@@ -15,6 +15,10 @@
             "error",
             "windows"
         ],
+        "semi": [
+            "error",
+            "never"
+        ],
         "func-style": [
             1,
             "expression"
