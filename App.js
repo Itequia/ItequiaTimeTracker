@@ -6,7 +6,8 @@ import {
 	View,
 	Image,
 	TextInput,
-	Button
+	Button,
+	Alert
 } from 'react-native'
 
 export default class App extends Component<{}> {
@@ -15,30 +16,40 @@ export default class App extends Component<{}> {
 			uri: 'https://res.cloudinary.com/itequia/image/upload/v1507637655/logoGrey.png'
 		}
 		return (
-			<View style={ styles.container }>
-				<Image source={pic} style={ styles.logo } />
-				<Text style={ styles.subtitle }>
-					[TIME TRACKER]
-				</Text>
-				<TextInput
-					style={ styles.textInput }
-					placeholder="Username"
-					onChangeText={(text) => this.setState({text})}
-				/>
-				<Button
-					style={ styles.loginButton }
-					onPress={() => { Alert.alert('You tapped the button!')}}
-					title="Log in"
-				/>
+			<View style={ styles.loginView }>
+				<View style={ styles.container }>
+					<Image source={pic} style={ styles.logo } />
+					<Text style={ styles.subtitle }>
+						[TIME TRACKER]
+					</Text>
+					<TextInput
+						style={ styles.textInput }
+						placeholder="Username"
+						onChangeText={(text) => this.setState({text})}
+					/>
+					<View style={ styles.loginButtonContainer }>
+						<Button
+							style={ styles.loginButton }
+							onPress={() => { Alert.alert('You tapped the button!')}}
+							title="Log in"
+						/>
+					</View>
+				</View>
 			</View>
 		)
 	}
 }
 
 const styles = StyleSheet.create({
+	loginView: {
+		flex:1,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor: '#F5FCFF',
+	},
 	container: {
 		flex: 1,
-		paddingTop: 50,
 		alignItems: 'center',
 		backgroundColor: '#F5FCFF',
 	},
@@ -62,7 +73,11 @@ const styles = StyleSheet.create({
 		height: 40,
 		width: 200
 	},
+	loginButtonContainer: {
+		width: 200, 
+		height: 200
+	},
 	loginButton: {
-		width: 200
+		backgroundColor: 'powderblue'
 	}
 })
