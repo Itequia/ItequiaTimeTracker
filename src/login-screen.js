@@ -105,9 +105,5 @@ const styles = StyleSheet.create({
 	},
 	loginButton: {
 		backgroundColor: 'powderblue'
-	},
-	cancelButton: {
-		marginTop: 30,
-		backgroundColor: 'powderblue'
 	}
 })
