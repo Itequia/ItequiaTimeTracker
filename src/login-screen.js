@@ -9,6 +9,8 @@ import {
 	Alert
 } from 'react-native'
 
+const CORRECT_PASSWORD = 'Itequia2008'
+
 export default class LoginScreen extends Component {
 
 	constructor(props) {
@@ -23,12 +25,11 @@ export default class LoginScreen extends Component {
 	static navigationOptions = {
 		title: 'Login',
 	}
-	isValidPassword = (password, correctPassword) => password === correctPassword
+	isValidPassword = (password) => password === CORRECT_PASSWORD
 
 	render() {
-		const invalidPasswordTitle = 'Invalid Password'
-		const invalidPasswordMessage = 'The password is not correct'
-		const correctPassword = 'Itequia2008'
+		const INVALID_PASSWORD_TITLE = 'Invalid Password'
+		const INVALID_PASSWORD_MESSAGE = 'The password is not correct'
 		
 		const pic = {
 			uri: 'https://res.cloudinary.com/itequia/image/upload/v1507637655/logoGrey.png'
@@ -57,8 +58,8 @@ export default class LoginScreen extends Component {
 						style={ styles.loginButton }
 						disabled={ this.state.username == '' || this.state.password == '' }
 						onPress={ () => 
-							this.isValidPassword(this.state.password,correctPassword) ? 
-								navigate('Home') : Alert.alert(invalidPasswordTitle,invalidPasswordMessage)
+							this.isValidPassword(this.state.password) ? 
+								navigate('Home') : Alert.alert(INVALID_PASSWORD_TITLE, INVALID_PASSWORD_MESSAGE)
 						}
 						title="Log in"
 					/>
