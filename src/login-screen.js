@@ -6,7 +6,6 @@ import {
 	Image,
 	TextInput,
 	Button,
-	Modal,
 	Alert
 } from 'react-native'
 
