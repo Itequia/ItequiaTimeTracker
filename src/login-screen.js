@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-	Platform,
 	StyleSheet,
 	Text,
 	View,
@@ -10,11 +9,18 @@ import {
 	Alert
 } from 'react-native'
 
-export default class App extends Component<{}> {
+export default class LoginScreen extends Component {
+
+	static navigationOptions = {
+		title: 'Login',
+	}
+
 	render() {
 		const pic = {
 			uri: 'https://res.cloudinary.com/itequia/image/upload/v1507637655/logoGrey.png'
 		}
+		const { navigate } = this.props.navigation
+		
 		return (
 			<View style={ styles.loginView }>
 				<View style={ styles.container }>
@@ -28,11 +34,13 @@ export default class App extends Component<{}> {
 						onChangeText={(text) => this.setState({text})}
 					/>
 					<View style={ styles.loginButtonContainer }>
-						<Button
-							style={ styles.loginButton }
-							onPress={() => { Alert.alert('You tapped the button!')}}
-							title="Log in"
-						/>
+					<Button
+						style={ styles.loginButton }
+						onPress={ () =>
+							navigate('Home')
+						}
+						title="Log in"
+					/>
 					</View>
 				</View>
 			</View>
@@ -61,17 +69,13 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	logo: { 
-		width: 200, 
-		height: 110,
-	},
-	instructions: {
-		textAlign: 'center',
-		color: '#333333',
-		marginBottom: 5,
+		height: 140,
+		width: 250
 	},
 	textInput: {
 		height: 40,
-		width: 200
+		width: 250,
+		marginTop: 30 
 	},
 	loginButtonContainer: {
 		width: 200, 
