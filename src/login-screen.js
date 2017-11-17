@@ -17,8 +17,7 @@ export default class LoginScreen extends Component {
 		super(props)
 		this.state = { 
 			username: '',
-			password: '',
-			modalVisible: false
+			password: ''
 		}
 	}
 	
