@@ -45,9 +45,6 @@ export default class HomeScreen extends Component {
 		return (
 			<View style={ styles.view }>
 				<Chrono style={ styles.chrono }/>
-				<View style={ styles.head }>
-					<Text >Cabecera</Text>			
-				</View>
 				<View style={ styles.recordList }>
 					<RecordList></RecordList>
 				</View>
@@ -67,10 +64,6 @@ const styles = StyleSheet.create({
 	chrono: {
 		alignSelf: 'stretch',
 		flex: .2,
-	},
-	head: {
-		alignSelf: 'stretch',
-		flex: .1,
 	},
 	recordList: {
 		alignSelf: 'stretch',

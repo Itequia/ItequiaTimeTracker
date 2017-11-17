@@ -10,35 +10,26 @@ export default class RecordListItem extends Component {
     
 	constructor(props) {
         super(props)
-        this.state = {
-            project: {
-                id: 1,
-                text: "project"
-            },
-            description: "description",
-            startDate: new Date(),
-            endDate: new Date(),
-            duration: '01:00'
-        }
 	}
 
 	render() {
+        const { record } = this.props
 		return (
             <View style={ styles.global }>
                 <View style={ styles.view }>
                     <View style={ styles.info }>
                         <Text style={ styles.project }>
-                            { this.state.project.text }
+                            { record.project }
                         </Text>
                         <Text style={ styles.description }>
-                            { this.state.description }
+                            { record.description }
                         </Text>
                     </View>
                     <View style={ styles.counterVertical }>
                         <View style={ styles.counter }>
                             <View>
                                 <Text style={ styles.time }>
-                                    { this.state.duration }
+                                    { record.startDate }
                                 </Text>                                        
                             </View>
                             <View>
