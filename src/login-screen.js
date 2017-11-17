@@ -10,8 +10,8 @@ import {
 } from 'react-native'
 
 import AuthService from "./services/auth.service"
+import Api from "./services/api.service"
 
-const CORRECT_PASSWORD = 'Itequia2008'
 const INVALID_PASSWORD_TITLE = 'Invalid Password'
 const INVALID_PASSWORD_MESSAGE = 'The password is not correct'
 
@@ -24,11 +24,9 @@ export default class LoginScreen extends Component {
 			password: ''
 		}
 	}
-	
-	isValidPassword = password => password === CORRECT_PASSWORD
 
 	logIn() {
-		if (!this.isValidPassword(this.state.password)) {
+		if (!Api.isValidPassword(this.state.password)) {
 			return Alert.alert(INVALID_PASSWORD_TITLE, INVALID_PASSWORD_MESSAGE)
 		}
 		AuthService.onLogIn("token")
