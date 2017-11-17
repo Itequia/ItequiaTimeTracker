@@ -6,6 +6,9 @@ import {
   View,
   Picker,
 } from 'react-native'
+
+import ProjectSelector from './project-selector'
+
 const Item = Picker.Item;
 
 export default class EntryScreen extends Component {
