@@ -4,7 +4,9 @@ import {
 	StyleSheet,
 	Text,
 	View,
+	Button,
 } from 'react-native'
+import AuthService from "./services/auth.service"
 
 export default class HomeScreen extends Component {
 
@@ -37,6 +39,12 @@ export default class HomeScreen extends Component {
 		})
 	}
 
+	// Only for debugging login/logout state
+	logOut() {
+		AuthService.onLogOut()
+					.then(() => this.props.navigation.navigate("Unauthorized"))
+	}
+
 	render() {
 		const { displayDate } = this.state
 		const seconds = Math.floor(displayDate / 1000)
@@ -46,6 +54,14 @@ export default class HomeScreen extends Component {
 				<Text style={ styles.text }>
 					00  : { seconds }
 				</Text>
+				{/* only for debugging login/logout state */}
+				<Button
+					onPress={ () =>
+						this.logOut()
+					}
+					title="Salir"
+				/>
+				{/* ///////////// */}
 			</View>
 		)
 	}
