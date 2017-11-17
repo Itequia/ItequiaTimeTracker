@@ -12,22 +12,21 @@ export default class HomeScreen extends Component {
 		super(props)
 		this.state = { 
 			startDate: new Date(),
-			displayDate: 0
+			displayDate: 0,
+			running: false
 		}
 	}
 	
 	componentDidMount() {
-		this.timerInterval = setInterval(
-			() => this.tick(),
-			1000
-		)
+		//TODO: llamada a la api para saber si hay algún record corriendo
 	}
 	
 	componentWillUnmount() {
-		clearInterval(this.timerInterval)
+		this.stopCrono()
 	}
 	
 	tick() {
+		console.log('tick')
 		this.setState({
 			displayDate: new Date() - this.state.startDate
 		})
@@ -49,27 +48,68 @@ export default class HomeScreen extends Component {
 		return timeString
 	}
 	
-	render() {
+	initRecord() {
+		//TODO: llamada a la api, si todo va bien hacer lo siguiente:
+		this.setState({ running: true })
+		this.initCrono()
+		//TODO: pop-up
+	}
 
-		return (
-			<View style={ styles.view }>
-				<Text style={ styles.text }>
-					{ this.getTimeFormatted() } 
-				</Text>
-				<View style={ styles.buttonContainer }>
-					<Button
-						onPress={ () => console.log("start") }
-						title="Start"
-					/>
-				</View>
-			</View>
+	initCrono() {
+		console.log('entra')
+		this.setState({ startDate: new Date() })
+		this.timerInterval = setInterval(
+			() => this.tick(),
+			1000
 		)
+	}
+
+	stopRecord() {
+		//TODO: llamada a la api, si todo va bien hacer lo siguiente:
+		this.setState({ running: false })
+		this.stopCrono()
+		//TODO: pop-up
+	}
+
+	stopCrono() {
+		clearInterval(this.timerInterval)
+	}
+
+	render() {
+		if(this.state.running)
+			return (
+				<View style={ styles.view }>
+					<Text style={ styles.text }>
+						{ this.getTimeFormatted() } 
+					</Text>
+					<View style={ styles.buttonContainer }>
+						<Button
+							onPress={ () => this.stopRecord() }
+							title="Stop"
+						/>
+					</View>
+				</View>
+			)
+		else
+			return (
+				<View style={ styles.view }>
+					<Text style={ styles.text }>
+						{ this.getTimeFormatted() } 
+					</Text>
+					<View style={ styles.buttonContainer }>
+						<Button
+							onPress={ () => this.initRecord() }
+							title="Play"
+						/>
+					</View>
+				</View>
+			)
 	}
 }
 
 const styles = StyleSheet.create({
 	view: {
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	text: {
 		fontSize: 70,

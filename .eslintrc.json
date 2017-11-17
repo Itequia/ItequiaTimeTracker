@@ -6,11 +6,12 @@
         "jquery": true
     },
     "globals": {},
-    "extends": "eslint:recommended",
-    "parser": "babel-eslint",
-    "ecmaFeatures": {
-        "classes": true,
-        "jsx": true
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
     },
     "plugins": [
         "react"
@@ -36,8 +37,8 @@
         "no-func-assign": 2,
         "no-redeclare": 2,
         "no-self-assign":2,
-		"no-unexpected-multiline": 2,
-		"no-console": 1,
+        "no-unexpected-multiline": 2,
+        "no-console": 1,
         "no-debugger": 1,
         "no-undef": 2,
         "no-unused-vars": 2
