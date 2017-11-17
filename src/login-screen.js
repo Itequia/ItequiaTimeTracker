@@ -9,20 +9,34 @@ import {
 	Alert
 } from 'react-native'
 
+const CORRECT_PASSWORD = 'Itequia2008'
+
 export default class LoginScreen extends Component {
 
+	constructor(props) {
+		super(props)
+		this.state = { 
+			username: '',
+			password: ''
+		}
+	}
+	
 	static navigationOptions = {
 		title: 'Login',
 	}
+	isValidPassword = (password) => password === CORRECT_PASSWORD
 
 	render() {
+		const INVALID_PASSWORD_TITLE = 'Invalid Password'
+		const INVALID_PASSWORD_MESSAGE = 'The password is not correct'
+		
 		const pic = {
 			uri: 'https://res.cloudinary.com/itequia/image/upload/v1507637655/logoGrey.png'
 		}
 		const { navigate } = this.props.navigation
 		
 		return (
-			<View style={ styles.loginView }>
+			<View style={ styles.loginView }>		
 				<View style={ styles.container }>
 					<Image source={pic} style={ styles.logo } />
 					<Text style={ styles.subtitle }>
@@ -31,13 +45,20 @@ export default class LoginScreen extends Component {
 					<TextInput
 						style={ styles.textInput }
 						placeholder="Username"
-						onChangeText={(text) => this.setState({text})}
+						onChangeText={(text) => this.setState({ username: text })}
+					/>
+					<TextInput
+						style={ styles.textInput }
+						placeholder="Password"
+						onChangeText={(text) => this.setState({ password: text })}
 					/>
 					<View style={ styles.loginButtonContainer }>
 					<Button
 						style={ styles.loginButton }
-						onPress={ () =>
-							navigate('Home')
+						disabled={ this.state.username == '' || this.state.password == '' }
+						onPress={ () => 
+							this.isValidPassword(this.state.password) ? 
+								navigate('Home') : Alert.alert(INVALID_PASSWORD_TITLE, INVALID_PASSWORD_MESSAGE)
 						}
 						title="Log in"
 					/>
