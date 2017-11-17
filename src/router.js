@@ -3,7 +3,7 @@ import {
 } from 'react-navigation'
 
 import LoginScreen from "./login-screen"
-import HomeScreen from "./home-screen"
+import HomeScreen from "./home/home-screen"
 
 const Authorized = StackNavigator({
 	Home: { screen: HomeScreen },
