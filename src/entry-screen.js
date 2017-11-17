@@ -5,9 +5,12 @@ import {
   TextInput,
   View,
   Picker,
+  TimePickerAndroid,
+  TouchableHighlight,
+  Button,
+  Alert
 } from 'react-native'
 
-import ProjectSelector from './project-selector'
 
 const Item = Picker.Item;
 
@@ -23,7 +26,9 @@ export default class EntryScreen extends Component {
 			projects: [],
 			selected: null,
 			description: '',
-			tags: ''
+			tags: '',
+			startDate: null,
+		    endDate: null
 		}
 	}
 
@@ -44,9 +49,37 @@ export default class EntryScreen extends Component {
 	    this.setState(newState);
 	}
 
+	async openTimePicker(key) {
+		try {
+		  const {action, hour, minute} = await TimePickerAndroid.open({
+		    hour: 14,
+		    minute: 0,
+		    is24Hour: false
+		  });
+		  if (action !== TimePickerAndroid.dismissedAction) {
+		   this.onProjectChange(key, `${hour}:${minute}`)
+		  }
+		} catch ({code, message}) {
+		  console.warn('Cannot open time picker', message);
+		}
+	}
+
 	render() {
 		return (
+
 		  <View style={styles.container}>
+		  	<View style={styles.buttonsContainer}>
+			  	<Button
+			  	  onPress={this.openTimePicker.bind(this, 'startDate')}
+			  	  title={this.state.startDate || 'Start Date'}
+			  	  color="#00ADC6"
+			  	/>
+			  	<Button
+			  	  onPress={this.openTimePicker.bind(this, 'endDate')}
+			  	  title={this.state.endDate || 'End Date'}
+			  	  color="#00ADC6"
+			  	/>
+		  	</View>
 		  	<View>
 		  		<Text
 		  			style={styles.label}>Description:
@@ -87,6 +120,15 @@ export default class EntryScreen extends Component {
 		  			</Picker>
 		  		</View>
 		  	</View>
+		  	<View style={styles.saveButtonContainer}>
+			  	<Button
+			  	  onPress={this.openTimePicker.bind(this, 'startDate')}
+			  	  title='Save'
+			  	  color="#449D44"
+			  	  style={styles.saveButton}
+			  	/>
+			  	
+		  	</View>
 
 		  </View>
 		)
@@ -108,6 +150,16 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     marginTop: 30
+  },
+  buttonsContainer: {
+  	justifyContent: 'space-around',
+    flexDirection: 'row',
+    marginBottom: 20,
+    alignSelf: 'stretch'
+  },
+  saveButtonContainer: {
+    marginTop: 20,
+	width: 200, 
   },
   input: {
     height: 37,
