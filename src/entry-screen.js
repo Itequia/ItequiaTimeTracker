@@ -28,25 +28,53 @@ export default class EntryScreen extends Component {
 			description: '',
 			tags: '',
 			startDate: null,
-		    endDate: null
+		    endDate: null,
+		    loadingProjects: true
 		}
 	}
 
-	componentDidMount() {
-		this.state.projects = this.getProjects()
+	async componentDidMount() {
+		await this.getProjectsFromApi()
 	}
 
-	getProjects() {
-		this.setState({
-			projects: ['Tekman', 'OhLibro', 'Celsa'],
-			selected: 'OhLibro'
-		})
+	async getProjectsFromApi() {
+	  try {
+	    let response = await fetch(
+	      "http://itequia-toggl-api.azurewebsites.net/api/projects"
+	    );
+	    let responseJson = await response.json();
+	    this.setState({
+	    	projects: responseJson.filter(project => project.status === 1).map((project) => {
+	    		return {
+	    			id: project.id,
+	    			name: project.name
+	    		}
+	    	} ),
+	    	selected: responseJson[0].name,
+	    	loadingProjects: false
+	    })
+	  } catch (error) {
+	    console.error(error);
+	  }
 	}
 
 	onProjectChange(key, value) {
 		const newState = {};
 	    newState[key] = value;
 	    this.setState(newState);
+	}
+
+	submitEntry() {
+		fetch("http://itequia-toggl-api.azurewebsites.net/api/records", {
+		  method: "POST",
+		  headers: {
+		    Accept: "application/json",
+		    "Content-Type": "application/json"
+		  },
+		  body: JSON.stringify({
+		    nose: 'Que posar aqui'
+		  })
+		});
 	}
 
 	async openTimePicker(key) {
@@ -66,7 +94,6 @@ export default class EntryScreen extends Component {
 
 	render() {
 		return (
-
 		  <View style={styles.container}>
 		  	<View style={styles.buttonsContainer}>
 			  	<Button
@@ -107,29 +134,34 @@ export default class EntryScreen extends Component {
 		  				onValueChange={this.onProjectChange.bind(this, 'selected')}
 		  				mode="dialog">
 		  				{
-		  					this.state.projects.map(project => (
+		  					!this.state.loadingProjects 
+		  					? this.state.projects.map(project => (
 		  						<Item
 		  							style={styles.itemStyle}
-		  							key={project} 
-		  							label={project} 
-		  							project={project} 
-		  							value={project} 
+		  							key={project.id} 
+		  							label={project.name} 
+		  							value={project.id} 
 		  						/>
-		  					))
+		  					  ))
+		  					: <Item
+		  							style={styles.itemStyle}
+		  							label="Loading..."
+		  							value="-1"
+		  						/>
 		  				}
 		  			</Picker>
 		  		</View>
 		  	</View>
 		  	<View style={styles.saveButtonContainer}>
 			  	<Button
-			  	  onPress={this.openTimePicker.bind(this, 'startDate')}
+			  	  onPress={this.submitEntry}
 			  	  title='Save'
 			  	  color="#449D44"
 			  	  style={styles.saveButton}
+			  	  disabled={this.state.loadingProjects}
 			  	/>
 			  	
 		  	</View>
-
 		  </View>
 		)
 	}
@@ -171,7 +203,6 @@ const styles = StyleSheet.create({
   	fontSize: 10
   },
   itemStyle: {
-    fontSize: 10,
     height: 35
   },
   pickerView: {
@@ -180,9 +211,7 @@ const styles = StyleSheet.create({
   },
   picker: {
   	color: 'grey',
-  	fontSize: 5,
     width: 250,
     height: 37,
-    textAlign: 'left'
   },
 })
