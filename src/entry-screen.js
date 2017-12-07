@@ -10,6 +10,7 @@ import {
   Button,
   Alert
 } from 'react-native'
+import ProjectSelector from './project-selector'
 
 
 const Item = Picker.Item;
@@ -23,7 +24,6 @@ export default class EntryScreen extends Component {
 	constructor(props) {
 		super(props)
 		this.state = { 
-			projects: [],
 			selected: null,
 			description: '',
 			tags: '',
@@ -33,29 +33,8 @@ export default class EntryScreen extends Component {
 		}
 	}
 
-	async componentDidMount() {
-		await this.getProjectsFromApi()
-	}
-
-	async getProjectsFromApi() {
-	  try {
-	    let response = await fetch(
-	      "http://itequia-toggl-api.azurewebsites.net/api/projects"
-	    );
-	    let responseJson = await response.json();
-	    this.setState({
-	    	projects: responseJson.filter(project => project.status === 1).map((project) => {
-	    		return {
-	    			id: project.id,
-	    			name: project.name
-	    		}
-	    	} ),
-	    	selected: responseJson[0].name,
-	    	loadingProjects: false
-	    })
-	  } catch (error) {
-	    console.error(error);
-	  }
+	onProjectsLoaded() {
+		this.setState({loadingProjects: false})
 	}
 
 	onProjectChange(key, value) {
@@ -125,33 +104,10 @@ export default class EntryScreen extends Component {
 		    		onChangeText={this.onProjectChange.bind(this, 'tags')}
 		    	/>
 		  	</View>
-		  	<View>
-		  		<Text style={styles.label}>Project:</Text>
-		  		<View style={styles.pickerView}>
-		  			<Picker
-		  				style={styles.picker}
-		  				selectedValue={this.state.selected}
-		  				onValueChange={this.onProjectChange.bind(this, 'selected')}
-		  				mode="dialog">
-		  				{
-		  					!this.state.loadingProjects 
-		  					? this.state.projects.map(project => (
-		  						<Item
-		  							style={styles.itemStyle}
-		  							key={project.id} 
-		  							label={project.name} 
-		  							value={project.id} 
-		  						/>
-		  					  ))
-		  					: <Item
-		  							style={styles.itemStyle}
-		  							label="Loading..."
-		  							value="-1"
-		  						/>
-		  				}
-		  			</Picker>
-		  		</View>
-		  	</View>
+		  	<ProjectSelector 
+		  		onProjectChange={this.onProjectChange.bind(this, 'selected')}
+		  		projectsLoaded={this.onProjectsLoaded.bind(this)}
+		  		/>
 		  	<View style={styles.saveButtonContainer}>
 			  	<Button
 			  	  onPress={this.submitEntry}
@@ -201,13 +157,6 @@ const styles = StyleSheet.create({
   	color: '#00adc6',
   	left: 0,
   	fontSize: 10
-  },
-  itemStyle: {
-    height: 35
-  },
-  pickerView: {
-  	borderBottomColor: 'grey',
-	borderBottomWidth: 1
   },
   picker: {
   	color: 'grey',

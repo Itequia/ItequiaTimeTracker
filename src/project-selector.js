@@ -16,25 +16,43 @@ export default class ProjectSelector extends Component {
 	constructor(props) {
 		super(props)
 		this.state = { 
-			projects: false
+			projects: false,
+			selected: null,
+		    loadingProjects: true
 		}
 	}
 
-	componentDidMount() {
-		this.state.projects = this.getProjects()
+	async componentDidMount() {
+		await this.getProjectsFromApi()
 	}
 
-	getProjects() {
-		this.setState({
-			projects: ['Tekman', 'OhLibro', 'Celsa'],
-			selected: 'OhLibro'
-		})
+	async getProjectsFromApi() {
+	  try {
+	    let response = await fetch(
+	      "http://itequia-toggl-api.azurewebsites.net/api/projects"
+	    );
+	    let responseJson = await response.json();
+	    this.setState({
+	    	projects: responseJson.filter(project => project.status === 1).map((project) => {
+	    		return {
+	    			id: project.id,
+	    			name: project.name
+	    		}
+	    	} ),
+	    	selected: responseJson[0].name,
+	    	loadingProjects: false
+	    })
+	    this.props.projectsLoaded()
+	  } catch (error) {
+	    console.error(error);
+	  }
 	}
 
 	onProjectChange(key, value) {
 		const newState = {};
 	    newState[key] = value;
 	    this.setState(newState);
+	    this.props.onProjectChange(value)
 	}
 
 
@@ -48,17 +66,20 @@ export default class ProjectSelector extends Component {
 	  				onValueChange={this.onProjectChange.bind(this, 'selected')}
 	  				mode="dialog">
 	  				{
-	  					this.state.projects 
+	  					!this.state.loadingProjects 
 	  					? this.state.projects.map(project => (
 	  						<Item
 	  							style={styles.itemStyle}
-	  							key={project} 
-	  							label={project} 
-	  							project={project} 
-	  							value={project} 
+	  							key={project.id} 
+	  							label={project.name} 
+	  							value={project.id} 
 	  						/>
-	  					 ))
-	  					: null
+	  					  ))
+	  					: <Item
+	  							style={styles.itemStyle}
+	  							label="Loading..."
+	  							value="-1"
+	  						/>
 	  				}
 	  			</Picker>
 	  		</View>
@@ -67,12 +88,16 @@ export default class ProjectSelector extends Component {
 }
 
 const styles = StyleSheet.create({
-	  itemStyle: {
-	    fontSize: 10,
-	    height: 35
-	  },
-	  pickerView: {
-	  	borderBottomColor: 'grey',
-		borderBottomWidth: 1
-	  },
+  itemStyle: {
+    height: 35
+  },
+  pickerView: {
+  	borderBottomColor: 'grey',
+	borderBottomWidth: 1
+  },
+  picker: {
+  	color: 'grey',
+    width: 250,
+    height: 37,
+  },
 })

@@ -37,7 +37,7 @@ export default class LoginScreen extends Component {
 					<Button
 						style={ styles.loginButton }
 						onPress={ () =>
-							navigate('Entry')
+							navigate('Home')
 						}
 						title="Log in"
 					/>

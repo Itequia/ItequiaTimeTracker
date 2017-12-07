@@ -8,7 +8,6 @@ import EntryScreen from "./entry-screen"
 
 export default StackNavigator({
 	Login: { screen: LoginScreen },
-	Entry: { screen: EntryScreen },
-	Home: { screen: HomeScreen }
-	
+	Home: { screen: HomeScreen },
+	Entry: { screen: EntryScreen }
 })
