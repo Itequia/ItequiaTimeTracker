@@ -9,6 +9,7 @@ import {
 	Alert,
 	Picker
 } from 'react-native'
+import Api from "../services/api.service"
 
 const Item = Picker.Item;
 export default class ProjectSelector extends Component {
@@ -27,25 +28,19 @@ export default class ProjectSelector extends Component {
 	}
 
 	async getProjectsFromApi() {
-	  try {
-	    let response = await fetch(
-	      "http://itequia-toggl-api.azurewebsites.net/api/projects"
-	    );
-	    let responseJson = await response.json();
-	    this.setState({
-	    	projects: responseJson.filter(project => project.status === 1).map((project) => {
-	    		return {
-	    			id: project.id,
-	    			name: project.name
-	    		}
-	    	} ),
-	    	selected: responseJson[0].name,
-	    	loadingProjects: false
-	    })
-	    this.props.projectsLoaded()
-	  } catch (error) {
-	    console.error(error);
-	  }
+		try{
+			let projects = await Api.getProjects()
+			this.setState({
+				projects: projects,
+				selected: projects[0].id,
+				loadingProjects: false
+			})
+		    this.props.projectsLoaded()
+		}
+		catch(err) {
+			console.log(err);
+		}
+		
 	}
 
 	onProjectChange(key, value) {

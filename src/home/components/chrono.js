@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 
 export default class HomeScreen extends Component {
-	
+
 	constructor(props) {
 		super(props)
 		this.state = { 
@@ -58,7 +58,7 @@ export default class HomeScreen extends Component {
 				</Text>
 				<View style={ styles.buttonContainer }>
 					<Button
-						onPress={ () => console.log("start") }
+					onPress= {() => this.props.onNavigate()}
 						title="Start"
 					/>
 				</View>

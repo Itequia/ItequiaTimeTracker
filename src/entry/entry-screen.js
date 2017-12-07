@@ -10,16 +10,11 @@ import {
   Button,
   Alert
 } from 'react-native'
-import ProjectSelector from './project-selector'
-
+import ProjectSelector from '../shared/project-selector'
 
 const Item = Picker.Item;
 
 export default class EntryScreen extends Component {
-
-	static navigationOptions = {
-		title: 'Entry',
-	}
 
 	constructor(props) {
 		super(props)
@@ -43,8 +38,8 @@ export default class EntryScreen extends Component {
 	    this.setState(newState);
 	}
 
-	submitEntry() {
-		fetch("http://itequia-toggl-api.azurewebsites.net/api/records", {
+	async submitEntry() {
+		let response = await fetch("http://itequia-toggl-api.azurewebsites.net/api/records", {
 		  method: "POST",
 		  headers: {
 		    Accept: "application/json",
@@ -54,6 +49,8 @@ export default class EntryScreen extends Component {
 		    nose: 'Que posar aqui'
 		  })
 		});
+		console.log(response);
+		this.props.navigation.navigate("Home")
 	}
 
 	async openTimePicker(key) {
@@ -110,7 +107,7 @@ export default class EntryScreen extends Component {
 		  		/>
 		  	<View style={styles.saveButtonContainer}>
 			  	<Button
-			  	  onPress={this.submitEntry}
+			  	  onPress={this.submitEntry.bind(this)}
 			  	  title='Save'
 			  	  color="#449D44"
 			  	  style={styles.saveButton}

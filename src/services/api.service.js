@@ -1,4 +1,6 @@
 const CORRECT_PASSWORD = 'Itequia2008'
+const API_BASE_URL = 'http://itequia-toggl-api.azurewebsites.net/api'
+const API_GET_PROJECTS = '/projects'
 
 class Api {
     
@@ -11,6 +13,25 @@ class Api {
             description: "Fake Description 1",
             startDate: Date(),
             endDate: Date()
+        }
+    }
+
+    getProjects = async () => {
+        try {
+            let response = await fetch(
+                `${API_BASE_URL}${API_GET_PROJECTS}`
+            )
+            let responseJson = await response.json()
+            return responseJson
+                .filter(project => project.status === 1)
+                .map((project) => {
+                    return {
+                        id: project.id,
+                        name: project.name
+                    }
+            })
+        } catch (error) {
+            console.error(error)
         }
     }
 
