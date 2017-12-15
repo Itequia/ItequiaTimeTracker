@@ -13,7 +13,7 @@ import {
 import ProjectSelector from '../shared/project-selector'
 import Api from "../services/api.service"
 
-const Item = Picker.Item;
+const Item = Picker.Item
 
 export default class EntryScreen extends Component {
 

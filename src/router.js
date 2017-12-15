@@ -13,6 +13,7 @@ const Authorized = StackNavigator({
     screen: HomeScreen,
     navigationOptions: {
 		title: 'Home',
+		headerLeft: null
 	}
   },
   Entry: {
