@@ -65,28 +65,7 @@ export default class EntryScreen extends Component {
 		    		onChangeText={this.onProjectChange.bind(this, 'tags')}
 		    	/>
 		  	</View>
-		  	<View>
-		  		<Text style={styles.label}>Project:</Text>
-		  		<View style={styles.pickerView}>
-		  			<Picker
-		  				style={styles.picker}
-		  				selectedValue={this.state.selected}
-		  				onValueChange={this.onProjectChange.bind(this, 'selected')}
-		  				mode="dialog">
-		  				{
-		  					this.state.projects.map(project => (
-		  						<Item
-		  							style={styles.itemStyle}
-		  							key={project} 
-		  							label={project} 
-		  							project={project} 
-		  							value={project} 
-		  						/>
-		  					))
-		  				}
-		  			</Picker>
-		  		</View>
-		  	</View>
+		  	<ProjectSelector></ProjectSelector>
 
 		  </View>
 		)
@@ -117,20 +96,5 @@ const styles = StyleSheet.create({
   	color: '#00adc6',
   	left: 0,
   	fontSize: 10
-  },
-  itemStyle: {
-    fontSize: 10,
-    height: 35
-  },
-  pickerView: {
-  	borderBottomColor: 'grey',
-	borderBottomWidth: 1
-  },
-  picker: {
-  	color: 'grey',
-  	fontSize: 5,
-    width: 250,
-    height: 37,
-    textAlign: 'left'
-  },
+	}
 })

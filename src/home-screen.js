@@ -43,6 +43,7 @@ export default class HomeScreen extends Component {
 		
 		return (
 			<View style={ styles.view }>
+			<Text> siuuu		</Text>
 				<Text style={ styles.text }>
 					00  : { seconds }
 				</Text>
