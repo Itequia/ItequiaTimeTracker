@@ -44,9 +44,7 @@ export default class ProjectSelector extends Component {
 	}
 
 	onProjectChange(key, value) {
-		const newState = {};
-	    newState[key] = value;
-	    this.setState(newState);
+	    this.setState({ [key]: value });
 	    this.props.onProjectChange(value)
 	}
 
@@ -62,19 +60,20 @@ export default class ProjectSelector extends Component {
 	  				mode="dialog">
 	  				{
 	  					!this.state.loadingProjects 
-	  					? this.state.projects.map(project => (
-	  						<Item
-	  							style={styles.itemStyle}
-	  							key={project.id} 
-	  							label={project.name} 
-	  							value={project.id} 
-	  						/>
-	  					  ))
-	  					: <Item
-	  							style={styles.itemStyle}
-	  							label="Loading..."
-	  							value="-1"
-	  						/>
+		  					? this.state.projects.map(project => (
+		  						<Item
+		  							style={styles.itemStyle}
+		  							key={project.id} 
+		  							label={project.name} 
+		  							value={project.id} 
+		  						/>
+		  					  ))
+		  					: <Item
+		  							style={styles.itemStyle}
+		  							label="Loading..."
+		  							value="-1"
+		  							key="-1"
+		  					/>
 	  				}
 	  			</Picker>
 	  		</View>

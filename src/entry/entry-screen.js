@@ -11,6 +11,7 @@ import {
   Alert
 } from 'react-native'
 import ProjectSelector from '../shared/project-selector'
+import Api from "../services/api.service"
 
 const Item = Picker.Item;
 
@@ -33,23 +34,11 @@ export default class EntryScreen extends Component {
 	}
 
 	onProjectChange(key, value) {
-		const newState = {};
-	    newState[key] = value;
-	    this.setState(newState);
+	    this.setState({ [key]: value })
 	}
 
 	async submitEntry() {
-		let response = await fetch("http://itequia-toggl-api.azurewebsites.net/api/records", {
-		  method: "POST",
-		  headers: {
-		    Accept: "application/json",
-		    "Content-Type": "application/json"
-		  },
-		  body: JSON.stringify({
-		    nose: 'Que posar aqui'
-		  })
-		});
-		console.log(response);
+		let response = await Api.saveRecord()
 		this.props.navigation.navigate("Home")
 	}
 
