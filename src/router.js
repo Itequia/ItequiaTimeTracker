@@ -1,14 +1,28 @@
 import {
 	StackNavigator,
 } from 'react-navigation'
-
+import {
+  AppRegistry,
+} from 'react-native';
 import LoginScreen from "./login-screen"
 import HomeScreen from "./home/home-screen"
+import EntryScreen from "./entry/entry-screen"
 
 const Authorized = StackNavigator({
-	Home: { screen: HomeScreen },
-	// Detail screen
-})
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+		title: 'Home',
+		headerLeft: null
+	}
+  },
+  Entry: {
+    screen: EntryScreen,
+    navigationOptions: {
+		title: 'Entry',
+	}
+  }
+});
 
 export const createRootNavigator = (isSignedIn = false) =>  {
 	return StackNavigator(
@@ -24,7 +38,7 @@ export const createRootNavigator = (isSignedIn = false) =>  {
 				navigationOptions: {
 					gesturesEnabled: false
 				}
-			}
+			},
 		},
 		{
 			headerMode: "none",
@@ -33,3 +47,5 @@ export const createRootNavigator = (isSignedIn = false) =>  {
 		}
 	)
 }
+
+AppRegistry.registerComponent('Authorized', () => Authorized);

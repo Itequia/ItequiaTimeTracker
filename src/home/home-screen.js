@@ -12,10 +12,6 @@ import RecordList from './components/record-list'
 
 export default class HomeScreen extends Component {
 
-	static navigationOptions = {
-		title: 'Home',
-	}
-
 	constructor(props) {
 		super(props)
 		this.state = { 
@@ -42,9 +38,15 @@ export default class HomeScreen extends Component {
 	}
 
 	render() {
+
+		const { navigate } = this.props.navigation
+
 		return (
 			<View style={ styles.view }>
-				<Chrono style={ styles.chrono }/>
+				<Chrono 
+				style={ styles.chrono }
+				onNavigate= {() => navigate('Entry')}
+				/>
 				<View style={ styles.head }>
 					<Text >Cabecera</Text>			
 				</View>

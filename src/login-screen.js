@@ -30,7 +30,7 @@ export default class LoginScreen extends Component {
 			return Alert.alert(INVALID_PASSWORD_TITLE, INVALID_PASSWORD_MESSAGE)
 		}
 		AuthService.onLogIn("token")
-				.then(() => this.props.navigation.navigate("Authorized"))
+			.then(() => this.props.navigation.navigate("Authorized"))
 	}
 
 	render() {
